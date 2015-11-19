@@ -2,3 +2,4 @@ directory:
 	unionfind/quickfind.py
 	unionfind/quickUnion.py
 	unionfind/quickUnionWithPathCompresion.py
+	unionfind/quickUnionWithWeight.py

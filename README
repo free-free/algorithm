@@ -3,3 +3,7 @@ directory:
 	unionfind/quickUnion.py
 	unionfind/quickUnionWithPathCompresion.py
 	unionfind/quickUnionWithWeight.py
+	Data Structure:
+		stack:	
+			stack/StackImplementWithArray.py
+

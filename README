@@ -6,4 +6,8 @@ directory:
 	Data Structure:
 		stack:	
 			stack/StackImplementWithArray.py
-
+	Sort algorithm:
+		selecting sort:
+			sort/selecting-sort.py
+		insert sort:
+			sort/insert-sort.py

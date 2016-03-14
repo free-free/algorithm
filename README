@@ -1,13 +1,2 @@
-directory:
-	unionfind/quickfind.py
-	unionfind/quickUnion.py
-	unionfind/quickUnionWithPathCompresion.py
-	unionfind/quickUnionWithWeight.py
-	Data Structure:
-		stack:	
-			stack/StackImplementWithArray.py
-	Sort algorithm:
-		selecting sort:
-			sort/selecting-sort.py
-		insert sort:
-			sort/insert-sort.py
+a repository for princeton algorithm
+

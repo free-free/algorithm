@@ -28,9 +28,33 @@ class QuickUnion(object):
 		self.id[proot]=qroot
 	def connected(self,q,p):
 		return self._root(q)==self._root(p) 	
+class QuickUnionWithWeighted(object):
+	r'''
+		quick union with weighted tree
+	'''
+	def __init__(self,objnum):
+		self.id=[i for i in range(0,objnum)]
+		self.sz=[0 for i in range(0,objnum)]
+	def _root(self,obj):
+		i=obj
+		while i!=self.id[i]:
+			i=self.id[i]
+		return i
+	def union(self,p,q):
+		qroot=self._root(q)
+		proot=self._root(p)
+		if self.sz[q]>=self.sz[p]:
+			self.id[proot]=qroot
+			self.sz[qroot]=self.sz[qroot]+self.sz[proot]
+		else:
+			self.id[qroot]=proot
+			self.sz[proot]+=self.sz[qroot]
+	def connected(self,q,p):
+		return self._root(q)==self._root(p)
 if __name__=='__main__':
 	#uf=QuickFind(10)	
-	uf=QuickUnion(20)
+	#uf=QuickUnion(20)
+	uf=QuickUnionWithWeighted(20)
 	uf.union(1,4)
 	uf.union(0,9)
 	print('1 connected 4',uf.connected(1,4))

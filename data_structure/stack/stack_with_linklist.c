@@ -42,10 +42,13 @@ int push(Stack *stack,int item)
 }
 int pop(Stack *stack)
 {
+	Node *onode=NULL;
 	int item=stack->first->item;
 	if (NULL==stack->first)
 		return -1;
+	onode=stack->first;
 	stack->first=stack->first->next;
+	free(onode);
 	return item;
 }
 int is_empty(Stack *stack)

@@ -13,9 +13,12 @@ int * selection_sort(int * data,int data_length)
 				min_index=j;
 			}
 		}
-		swap=*(data+i);
-		*(data+i)=*(data+min_index);	
-		*(data+min_index)=swap;
+		if (i!=min_index)
+		{
+			swap=*(data+i);
+			*(data+i)=*(data+min_index);
+			*(data+min_index)=swap;
+		}
 	}
 	return data;
 }

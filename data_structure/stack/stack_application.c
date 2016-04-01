@@ -39,15 +39,15 @@ char* char_stack_push(Stack *stack,char *ch)
 
 int is_empty(Stack *stack)
 {
-	return stack->top==0;
+	return stack->top==-1;
 }
 char *char_stack_pop(Stack *stack)
 {
+	stack->top--;
 	if (stack->is_empty(stack))
 	{
 		return NULL;
 	}
-	stack->top--;
 	return &(*((char*)stack->data+stack->top));
 }
 
@@ -64,13 +64,17 @@ int * int_stack_push(Stack*stack,int *item)
 }
 int * int_stack_pop(Stack*stack)
 {
+	stack->top--;
 	if (stack->is_empty(stack))
 	{
 		return NULL;
 	}
-	stack->top--;
 	return &(*((int*)stack->data+stack->top));
 }
+
+
+
+
 int main(int argv,char *args[])
 {
 	Stack *operator,opr,*operand,opd;
@@ -78,8 +82,8 @@ int main(int argv,char *args[])
 	char ch;
 	operator=&opr;
 	operand=&opd;
-	operand=stack_init(operand,100,1,char_stack_push,char_stack_pop,is_empty);
-	operator=stack_init(operator,100,4,int_stack_push,int_stack_pop,is_empty);
+	operand=stack_init(operand,100,4,int_stack_push,int_stack_pop,is_empty);
+	operator=stack_init(operator,100,1,char_stack_push,char_stack_pop,is_empty);
 	if (argv>=2)
 	{
 		for(i=0;i<strlen(args[1]);i++)
@@ -87,56 +91,60 @@ int main(int argv,char *args[])
 			switch (args[1][i])
 			{
 				case '*':
-					operand->push(operand,&(args[1][i]));
+					operator->push(operator,&(args[1][i]));
 					break;
 				case '+':
-					operand->push(operand,&(args[1][i]));
+					operator->push(operator,&(args[1][i]));
 					break;
 				case '-':
-					operand->push(operand,&(args[1][i]));
+					operator->push(operator,&(args[1][i]));
 					break;
 				case '/':
-					operand->push(operand,&(args[1][i]));
+					operator->push(operator,&(args[1][i]));
 					break;
 				case '%':
-					operand->push(operand,&(args[1][i]));
+					operator->push(operator,&(args[1][i]));
 				case '(':
 					break;
 				case ')':
-					ch=*operand->pop(operand);
+					//printf("push operator");
+					//printf("operator address:%p\n",operator->pop(operator));
+					ch=*((char*)operator->pop(operator));
 					if(ch=='*')
 					{	
-						out=(*operator->pop(operator))*(*operator->pop(operator));
-						operator->push(operator,&out);
+						out=(*(int*)operand->pop(operand))*(*(int*)operand->pop(operand));
+						operand->push(operand,&out);
 					}
 					else if(ch=='/')
 					{	
-						out=(*operator->pop(operator))/(*operator->pop(operator));
-						operator->push(operator,&out);
+						out=(*(int*)operand->pop(operand))/(*(int*)operand->pop(operand));
+						operand->push(operand,&out);
 					}
 					else if(ch=='%')
 					{	
-						out=(*operator->pop(operator))%(*operator->pop(operator));
-						operator->push(operator,&out);
+						out=(*(int*)operand->pop(operand))%(*(int*)operand->pop(operand));
+						operand->push(operand,&out);
 					}else if(ch=='+')
 					{
-						out=(*operator->pop(operator))+(*operator->pop(operator));
-						operator->push(operator,&out);
+						out=(*(int*)operand->pop(operand))+(*(int*)operand->pop(operand));
+						operand->push(operand,&out);
 					}else
 					{
-						out=(*operator->pop(operator))-(*operator->pop(operator));
-						operator->push(operator,&out);
+						out=(*(int*)operand->pop(operand))-(*(int*)operand->pop(operand));
+						operand->push(operand,&out);
 					}						
 					
 					break;
 				default:
-					operator->push(operator,&(args[1][i]));
+					/* convert acsii number to digital number */
+					out=args[1][i]-0x30;
+					operand->push(operand,&out);
 					break;
 					
 			}
 		}
 	}
-	printf("result:%d\n",*(operator->pop(operator)));
+	printf("result:%d\n",*((int*)operand->pop(operand)));
 	free(operator->data);
 	free(operand->data);
 	return 0;

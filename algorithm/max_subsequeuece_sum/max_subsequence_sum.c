@@ -3,7 +3,7 @@
 /****************************************************************
 *
 *@description:algorithm one
-*@executing time:O(N^3)
+*@complexity:O(N^3)
 *
 *
 ****************************************************************/
@@ -30,7 +30,7 @@ int max_subsequece_sum1(const int a[],int n)
 /****************************************************************
 *
 *@description:algorithm two
-*@executing time:O(N^2)
+*@complexity:O(N^2)
 *
 ***************************************************************/
 int max_subsequece_sum2(const int a[],int n)
@@ -50,10 +50,34 @@ int max_subsequece_sum2(const int a[],int n)
 	}
 	return maxSum;
 }
+/*************************************************************
+*
+*@description:algorithm three(online algorithm)
+*@complexity:O(N)
+*
+************************************************************/
+int max_subsequece_sum3(const int a[],int n)
+{
+	int maxSum=0,thisSum=0,i=0;
+	for(i=0;i<n;i++)
+	{
+		thisSum+=a[i];
+		if(thisSum>maxSum)
+		{
+			maxSum=thisSum;
+		}
+		else if(thisSum<0)
+		{
+			thisSum=0;
+		}
+	}
+	return maxSum;
+}
 int main(int argv,char * args[])
 {
 	int a[10]={[0]=1,[1]=-2,[2]=5,[3]=2,-3,9,-4,5,-6,3};
 	printf("algorithm one output:%d\n",max_subsequece_sum1(a,10));
 	printf("algorithm two output:%d\n",max_subsequece_sum2(a,10));
+	printf("algorithm three output:%d\n",max_subsequece_sum3(a,10));
 	return 1;
 }

@@ -16,19 +16,22 @@ class MaxHeap(object):
         
     def build_heap(self):
         last_non_leaf = self.cnt // 2
-        for x in range(last_non_leaf, 0, -1):
-            max_pos = x
-            i = x
-            while True:
-                if i <= self.cnt and self.heap[i] < self.heap[2 *i ]:
-                    max_pos = 2 * i
-                if i <= self.cnt and self.heap[max_pos] < self.heap[2 * i + 1]:
-                    max_pos = 2 * i + 1
-                if max_pos == i:
-                    break
-                self.heap[i], self.heap[max_pos] = self.heap[max_pos], self.heap[i]
-                i = max_pos
+        for i in range(last_non_leaf, 0, -1):
+            self.heapify(self.heap, self.sz, i)
 
+    def heapify(self, heap, sz, ele_ind):
+        while True:
+            max_pos = ele_ind
+            if  2 * ele_ind < sz and heap[ele_ind] < heap[2 * ele_ind]:
+                max_pos = 2 * ele_ind
+            if (2 * ele_ind + 1) < sz and heap[max_pos] < heap[2 * ele_ind + 1]:
+                max_pos = 2 * ele_ind + 1
+            if max_pos == ele_ind:
+                break
+            heap[ele_ind], heap[max_pos] = heap[max_pos], heap[ele_ind]
+            ele_ind = max_pos
+    
+            
                 
     
 

@@ -4,20 +4,17 @@
 import numpy as np
 
 
-class ArrayHeap(object):
+class MaxHeap(object):
 
 
-    def __init__(self, sz, data = None):
+    def __init__(self, sz, data):
         self.sz  = sz
-        self.cnt = 0
-        self.heap = [0 for i in range(sz + 1)]
-        if data is not None:
-            for i, val in enumerate(data):
-                self.heap[i + 1] = val
-            self.cnt = len(data)
-            self._build_heap()
+        self.heap = [0] * (sz + 1)
+        self.cnt = len(data)
+        self.heap[1: self.cnt + 1] = data
+        self.build_heap()
         
-    def _build_heap(self):
+    def build_heap(self):
         last_non_leaf = self.cnt // 2
         for x in range(last_non_leaf, 0, -1):
             max_pos = x
@@ -38,5 +35,5 @@ class ArrayHeap(object):
 if __name__ == '__main__':
     data = np.random.randint(0, 100, 10)
     print(data)
-    heap = ArrayHeap(100, data)
+    heap = MaxHeap(100, data)
     print(heap.heap)

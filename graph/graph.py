@@ -1,30 +1,49 @@
 # -*- coding:utf-8 -*-
 
 
-class UndirectedGraph(object):
+class Undigraph(object):
 
 
     def __init__(self, vertex_num):
         self.v_num = vertex_num
-        self.adj_table = []
+        self.adj_tbl = []
         for i in range(self.v_num + 1):
-            self.adj_table.append([])
+            self.adj_tbl.append([])
 
     def add_edge(self, s, t):
         if s > self.v_num or t > self.v_num:
             return False
-        self.adj_table[s].append(t)
-        self.adj_table[t].append(s)
+        self.adj_tbl[s].append(t)
+        self.adj_tbl[t].append(s)
         return True
 
 
+class Digraph(object):
+
+
+    def __init__(self, vertex_num):
+        self.v_num = vertex_num
+        self.adj_tbl = []
+        for i in range(self.v_num + 1):
+            self.adj_tbl.append([])
+    
+    def add_edge(self, frm, to):
+        if frm > self.v_num or to > self.v_num:
+            return False
+        self.adj_tbl[frm].append(to)
+
+
+
+
 if __name__ == '__main__':
-    g = UndirectedGraph(10)
-    g.add_edge(1, 9)
-    g.add_edge(1, 3)
-    g.add_edge(3, 2)
-    g.add_edge(3, 2)
-    g.add_edge(3, 2)
-    g.add_edge(3, 2)
-    print(g.adj_table)
-        
+    ug = Undigraph(10)
+    ug.add_edge(1, 9)
+    ug.add_edge(1, 3)
+    ug.add_edge(3, 2)
+    print(ug.adj_tbl)
+    
+    dg = Digraph(10)
+    dg.add_edge(1, 9)
+    dg.add_edge(1, 3)
+    dg.add_edge(3, 4)
+    print(dg.adj_tbl)

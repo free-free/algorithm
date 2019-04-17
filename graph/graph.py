@@ -16,6 +16,20 @@ class Undigraph(object):
         self.adj_tbl[s].append(t)
         self.adj_tbl[t].append(s)
         return True
+    
+    def __len__(self):
+        return self.v_num
+
+    def __getitem__(self, ind):
+        if ind > self.v_num:
+            raise IndexError("No Such Vertex!")
+        return self.adj_tbl[ind]
+
+    def __repr__(self):
+        return str(self.adj_tbl)
+
+    def __str__(self):
+        return str(self.adj_tbl)
 
 
 class Digraph(object):
@@ -32,7 +46,19 @@ class Digraph(object):
             return False
         self.adj_tbl[frm].append(to)
 
+    def __len__(self):
+        return self.v_num
 
+    def __getitem__(self, ind):
+        if ind > self.v_num:
+            raise IndexError("No such vertex!")
+        return self.ajd_tbl[ind]
+
+    def __repr__(self):
+        return str(self.adj_tbl)
+
+    def __str__(self):
+        return str(self.adj_tbl)
 
 
 if __name__ == '__main__':

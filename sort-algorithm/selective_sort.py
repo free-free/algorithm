@@ -1,22 +1,21 @@
+
 import numpy as np
 
 
-
-def selective_sort(arr):
-    for  i in range(len(arr)):
-        min_p = i
-        min_val = arr[i]
-        for j in range(i + 1, len(arr)):
-            if min_val > arr[j]:
-                min_p = j
-                min_val = arr[j]
-        arr[min_p] = arr[i]
-        arr[i] = min_val
-    return arr
+def selective_sort(a):
+    for i in range(0, len(a)):
+        min_val = a[i]
+        min_pos = i
+        for j in range(i, len(a)):
+            if a[j] < min_val:
+                min_pos = j
+                min_val = a[j]
+        a[min_pos], a[i] = a[i], a[min_pos]
 
 
 if __name__ == '__main__':
     data = np.random.randint(0, 100, 50)
     print(data)
-    print('*' * 100)
-    print(selective_sort(data))
+    print('*' * 50)
+    selective_sort(data)
+    print(data)

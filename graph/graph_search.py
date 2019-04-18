@@ -5,6 +5,15 @@ from collections import deque
 from graph import Undigraph
 
 
+def print_vertex_trace(prev, s, t, level=1):
+    if prev[t] != -1 and t != s:
+        print_vertex_trace(prev, s, prev[t], level+1)
+    if level == 1:
+        print("%d" % t)
+    else:
+        print("%d -> " % t, end="")
+
+
 def bfs(graph, s, t):
     if s == t:
         return 
@@ -24,15 +33,6 @@ def bfs(graph, s, t):
                 queue.append(adj_v)
     return prev
 
-def print_vertex_trace(prev, s, t, level=1):
-    if prev[t] != -1 and t != s:
-        print_vertex_trace(prev, s, prev[t], level+1)
-    if level == 1:
-        print("%d" % t)
-    else:
-        print("%d -> " % t, end="")
-
-
 
 def recursive_dfs(graph, s, t):
     prev = [-1] * len(graph)
@@ -43,13 +43,29 @@ def recursive_dfs(graph, s, t):
         if s == t:
             found = True
             return 
-        for v in graph[s]:
+        for v in graph[s][::-1]:
             if not visited[v]:
                 visited[v] = True
                 prev[v] = s
                 rdfs(v, t)
     rdfs(s, t)
     return prev
+
+
+def dfs(graph, s, t):
+    prev = [-1] * len(graph)
+    visited = [False] * len(graph)
+    stk = [s]
+    visited[s] = True
+    while len(stk) > 0:
+        vertex = stk.pop()
+        for v in graph[vertex]:
+            if not visited[v]:
+                prev[v] =  vertex
+                if t == v:
+                    return prev
+                visited[v] = True
+                stk.append(v)
         
 
 if __name__ == '__main__':
@@ -67,5 +83,7 @@ if __name__ == '__main__':
     print(g)
     bfs_prev = bfs(g, 0, 7)
     print_vertex_trace(bfs_prev, 0, 7)
-    dfs_prev = recursive_dfs(g, 0, 6)
-    print_vertex_trace(dfs_prev, 0, 6) 
+    dfs_prev = recursive_dfs(g, 0, 7)
+    print_vertex_trace(dfs_prev, 0, 7) 
+    dfs2_prev = dfs(g, 0, 7)
+    print_vertex_trace(dfs2_prev, 0, 7) 
